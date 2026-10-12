@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Scheda allenamento a casa</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2F4F7;--card:#fff;--ink:#16213A;--mut:#63708A;--line:#DDE2EA;--acc:#2450E0;--onacc:#fff;--ok:#12805F;--okbg:#E2F4EC;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101726;--card:#19233A;--ink:#EAF0FB;--mut:#9AA7C0;--line:#2A3752;--acc:#7C9BFF;--onacc:#101726;--ok:#4FD1A1;--okbg:#153A33}}
+:root[data-theme="dark"]{--bg:#101726;--card:#19233A;--ink:#EAF0FB;--mut:#9AA7C0;--line:#2A3752;--acc:#7C9BFF;--onacc:#101726;--ok:#4FD1A1;--okbg:#153A33}
+html{scroll-padding-top:56px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.35 Barlow,system-ui,sans-serif}
+header{padding:10px 14px 0}
+h1{font:700 20px 'Barlow Condensed',system-ui,sans-serif;margin:0 0 6px}
+.tabs{position:sticky;top:0;z-index:2;display:flex;gap:6px;padding:6px 14px;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs button{flex:1;padding:8px 2px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font:600 14px Barlow,system-ui,sans-serif}
+.tabs button.on{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+.prog{padding:6px 14px 0;font-size:13px;color:var(--mut)}
+main{padding:8px 14px 120px;max-width:560px;margin:0 auto}
+.ex{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:10px}
+.ex.ok{border-color:var(--ok);background:var(--okbg)}
+.ex h2{font:700 19px 'Barlow Condensed',system-ui,sans-serif;margin:0}
+.meta{color:var(--mut);font-size:13.5px;margin:2px 0}
+.last{color:var(--acc);font-size:13.5px;margin:2px 0}
+a{color:var(--acc);font-size:14px;font-weight:600}
+details{margin:4px 0}
+summary{color:var(--acc);font-weight:600;font-size:14px;padding:4px 0;cursor:pointer}
+.row{display:grid;grid-template-columns:22px 1fr 1fr 44px;gap:8px;align-items:center;margin-top:6px}
+.row.h{font-size:12px;color:var(--mut);margin-top:8px}
+.row input[type=text]{width:100%;box-sizing:border-box;padding:8px 10px;font:500 16px Barlow,system-ui,sans-serif;border:1.5px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink)}
+.chk{height:40px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--onacc);font-size:20px}
+.chk.d{background:var(--ok);border-color:var(--ok);color:#fff}
+.mini{display:flex;gap:16px;margin-top:6px}
+.mini button{background:none;border:0;color:var(--acc);font:600 14px Barlow,system-ui,sans-serif;padding:4px 0}
+.fin{width:100%;padding:13px;border:0;border-radius:12px;background:var(--acc);color:var(--onacc);font:700 16px Barlow,system-ui,sans-serif}
+#msg{text-align:center;color:var(--ok);font-weight:600;min-height:22px;margin-top:10px}
+#tm{position:fixed;left:0;right:0;bottom:0;z-index:3;background:var(--card);border-top:1.5px solid var(--line);padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px))}
+#tm .in{max-width:560px;margin:0 auto}
+.tt{display:flex;align-items:center;gap:8px}
+#td{font:700 30px/1 'Barlow Condensed',system-ui,sans-serif;min-width:62px;font-variant-numeric:tabular-nums}
+#td.end{color:var(--ok)}
+.tb{flex:1;padding:8px;border:0;border-radius:10px;background:var(--acc);color:var(--onacc);font:700 15px Barlow,system-ui,sans-serif}
+.tb.s{flex:0 0 auto;background:var(--bg);color:var(--ink);border:1.5px solid var(--line)}
+.pr{display:flex;gap:5px;margin-top:6px;align-items:center}
+.pr button{padding:5px 10px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:600 13px Barlow,system-ui,sans-serif}
+.pr button.on{border-color:var(--acc);color:var(--acc)}
+.pr label{font-size:12px;color:var(--mut);margin-left:auto;display:flex;gap:4px;align-items:center;white-space:nowrap}
+button:disabled{opacity:.4}
+body.nw #fb,body.nw #tm,body.nw #msg{display:none}
+.sl{margin-top:8px}
+.sl b{font-weight:600}
+.dl{float:right;font-size:13px;font-weight:600;margin-left:8px}
+.dl.u{color:var(--ok)}
+.dl.d,.dl.m{color:var(--mut)}
+.seg{display:flex;gap:8px;margin-bottom:8px}
+.seg button{flex:1;padding:9px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font:600 14px Barlow,system-ui,sans-serif}
+.seg button.on{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;font-weight:600}
+.nav button{width:48px;height:40px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font:600 22px Barlow,system-ui,sans-serif}
+.kp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.kp div{border:1.5px solid var(--line);border-radius:10px;padding:8px}
+.kp b{display:block;font:700 20px 'Barlow Condensed',system-ui,sans-serif}
+.kp span{font-size:12px;color:var(--mut)}
+table.rt{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
+.rt th,.rt td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+.rt th{font-size:12px;color:var(--mut);font-weight:600}
+@media print{
+:root{--bg:#fff!important;--card:#fff!important;--ink:#000!important;--mut:#444!important;--line:#999!important;--acc:#000!important;--ok:#000!important;--okbg:#fff!important}
+header,.tabs,.prog,#tm,.noprint,#fb,#msg{display:none!important}
+body{background:#fff}
+.ex{break-inside:avoid;border-color:#999}
+}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+</style></head><body>
+<header><h1>Scheda allenamento a casa</h1></header>
+<div class="tabs"><button data-a="tab" data-t="A">Scheda A</button><button data-a="tab" data-t="B">Scheda B</button><button data-a="tab" data-t="H">Storico</button><button data-a="tab" data-t="R">Report</button></div>
+<div class="prog" id="prog"></div>
+<main><div id="app"></div><button class="fin" id="fb" data-a="fin">Fine allenamento</button><div id="msg"></div></main>
+<div id="tm" role="group" aria-label="Timer di recupero"><div class="in">
+<div class="tt"><div id="td">1:30</div><button class="tb" id="tg" data-m="go">Avvia</button><button class="tb s" data-m="rs">Azzera</button></div>
+<div class="pr"><button data-m="pre" data-s="60">1:00</button><button data-m="pre" data-s="90">1:30</button><button data-m="pre" data-s="120">2:00</button><button data-m="pre" data-s="180">3:00</button><label title="Il timer parte quando spunti una serie"><input type="checkbox" id="au">Auto-avvio</label></div>
+</div></div>
+<script>
+const P={A:[
+["pbb","Panca piana con bilanciere (o manubri)",2,"6-10","Bilanciere sui supporti, scapole ferme. Da solo resta a 2-3 ripetizioni dal cedimento."],
+["tr","Trazioni alla sbarra",2,"max","Parti da braccia tese, porta il mento sopra la sbarra. Se non riesci, fai solo la discesa in 5 secondi."],
+["lc","Leg curl sdraiato con l'attacco gambe della panca",2,"8-12","Pancia in giù, bacino fermo sulla panca: porta i talloni verso i glutei e torna su lentamente in 3 secondi."],
+["alm","Alzate laterali con manubri",2,"12-15","Gomiti leggermente flessi, sali fino all'altezza delle spalle."],
+["cbp","Curl bicipiti sulla panca con appoggio",2,"8-12","Braccio appoggiato al cuscino, scendi lentamente senza slancio."],
+["fr","French press con manubrio sulla panca",2,"8-12","Gomiti fermi e puntati in alto, muovi solo l'avambraccio."],
+["sg","Sollevamento gambe alla spalliera",2,"10-15","Bacino leggermente arrotondato, sali senza dondolare."]],
+B:[
+["ht","Hip thrust con bilanciere",2,"8-12","Spalle sulla panca, spingi coi talloni e contrai i glutei in alto."],
+["pim","Panca inclinata con manubri",2,"6-10","Schienale a circa 30°, scendi fino a sentire lo stiramento del petto."],
+["rk","Rematore a un braccio con kettlebell 16 kg",2,"8-12","Una mano e un ginocchio sulla panca, tira il gomito verso il fianco."],
+["dp","Dip alle parallele",2,"6-10","Busto leggermente in avanti, scendi controllato. Col giubbotto quando diventa facile."],
+["nc","Nordic curl assistito alla spalliera",2,"4-8","Piedi bloccati sotto un piolo, ginocchia su un cuscino. Scendi in avanti il più lentamente possibile con il corpo dritto, poi spingiti su con le mani."],
+["ap","Alzate posteriori a busto flesso",2,"12-15","Busto inclinato, apri le braccia portando i gomiti indietro."],
+["cf","Calf raise su gradino, una gamba alla volta",2,"12-15","Kettlebell in mano, sali sulla punta al massimo e scendi fino a sentire lo stiramento."]]};
+const T={pbb:7,tr:6,lc:5,alm:4,cbp:4,fr:4,sg:4,ht:7,pim:7,rk:7,dp:6,nc:5,ap:4,cf:4};
+const W={pbb:"25-35 kg totali (bilanciere incluso), con manubri 10-12 kg l'uno",tr:"peso corporeo",lc:"7-12 kg sull'attacco",alm:"4-6 kg per mano",cbp:"6-8 kg",fr:"8-12 kg, con due mani",sg:"peso corporeo",ht:"35-55 kg totali",pim:"8-12 kg per mano",rk:"kettlebell da 8 kg, poi 16 kg quando diventa facile",dp:"peso corporeo, poi col giubbotto",nc:"peso corporeo, aiutandoti con le mani per risalire",ap:"3-5 kg per mano",cf:"peso corporeo, poi kettlebell in mano"};
+let S=null;try{S=JSON.parse(localStorage.getItem('sg'))}catch(e){}
+S=S||{tab:'A',cur:{},last:{}};
+if(!S.rest)S.rest=90;if(S.auto===undefined)S.auto=1;if(!S.hist)S.hist=[];if(!S.R)S.R={m:'w',o:0};
+const save=()=>{try{localStorage.setItem('sg',JSON.stringify(S))}catch(e){}};
+const sets=(id,n)=>S.cur[id]||(S.cur[id]=Array.from({length:n||3},()=>({kg:'',r:'',d:0})));
+const $=id=>document.getElementById(id);
+
+let TM={end:0,left:S.rest,run:false},ti=null,ac=null,wl=null;
+const fmt=n=>Math.floor(n/60)+':'+String(n%60).padStart(2,'0');
+function tmUi(fin){
+ const d=$('td');d.textContent=fin?'Via!':fmt(TM.left);d.className=fin?'end':'';
+ $('tg').textContent=TM.run?'Pausa':(TM.left<S.rest&&TM.left>0?'Riprendi':'Avvia');
+ document.querySelectorAll('.pr [data-s]').forEach(b=>b.classList.toggle('on',+b.dataset.s===S.rest));
+ $('au').checked=!!S.auto;
+}
+function audio(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume()}catch(e){}}
+function beep(){try{audio();[0,.25,.5].forEach(t=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.value=.2;o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+.15)})}catch(e){}}
+function keepOn(){try{if(navigator.wakeLock)navigator.wakeLock.request('screen').then(l=>{wl=l}).catch(()=>{})}catch(e){}}
+function release(){try{if(wl){wl.release();wl=null}}catch(e){}}
+function tick(){
+ const l=Math.ceil((TM.end-Date.now())/1000);
+ if(l<=0){clearInterval(ti);TM.run=false;TM.left=S.rest;release();beep();try{navigator.vibrate&&navigator.vibrate([200,100,200,100,200])}catch(e){}tmUi(true)}
+ else if(l!==TM.left){TM.left=l;tmUi()}
+}
+function startTm(sec){audio();TM.left=sec;TM.end=Date.now()+sec*1000;TM.run=true;clearInterval(ti);ti=setInterval(tick,250);keepOn();tmUi()}
+function pauseTm(){clearInterval(ti);TM.left=Math.max(1,Math.ceil((TM.end-Date.now())/1000));TM.run=false;release();tmUi()}
+function resetTm(){clearInterval(ti);TM.run=false;TM.left=S.rest;release();tmUi()}
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-m]');if(!b)return;const m=b.dataset.m;
+ if(m==='go'){TM.run?pauseTm():startTm(TM.left>0?TM.left:S.rest)}
+ else if(m==='rs'){resetTm()}
+ else if(m==='pre'){S.rest=+b.dataset.s;save();startTm(S.rest)}
+});
+$('au').addEventListener('change',e=>{S.auto=e.target.checked?1:0;save()});
+document.addEventListener('visibilitychange',()=>{if(TM.run)tick()});
+
+const num=v=>{const n=parseFloat(String(v).replace(',','.'));return isNaN(n)?0:n};
+const fn=n=>(Math.round(n*10)/10).toString().replace('.',',');
+const sgn=n=>(n>0?'+':n<0?'−':'')+fn(Math.abs(n));
+const ds=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const fd=x=>new Date(x+'T12:00:00').toLocaleDateString('it-IT',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+const fds=x=>new Date(x+'T12:00:00').toLocaleDateString('it-IT',{weekday:'short',day:'numeric',month:'short'});
+const kgf=n=>Math.round(n).toLocaleString('it-IT')+' kg';
+const stext=ss=>ss.map(x=>(num(x.kg)?fn(num(x.kg))+' kg':'corpo libero')+' × '+(x.r||'?')).join(' · ');
+const hist=()=>S.hist||(S.hist=[]);
+const exMax=e=>Math.max(0,...e.sets.map(x=>num(x.kg)));
+const exReps=e=>e.sets.reduce((a,x)=>a+num(x.r),0);
+const sVol=x=>x.ex.reduce((a,e)=>a+e.sets.reduce((b,y)=>b+num(y.kg)*num(y.r),0),0);
+const sSets=x=>x.ex.reduce((a,e)=>a+e.sets.length,0);
+function delta(cur,prev){
+ if(!prev)return {t:'prima volta',c:'m'};
+ const a=exMax(cur),b=exMax(prev);let d,u;
+ if(a>0||b>0){d=a-b;u=' kg'}else{d=exReps(cur)-exReps(prev);u=' rip.'}
+ return d>0?{t:'↑ '+sgn(d)+u,c:'u'}:d<0?{t:'↓ '+sgn(d)+u,c:'d'}:{t:'= come l\'ultima volta',c:'m'};
+}
+function sumHtml(){
+ const h=hist(),x=h.find(y=>y.t===S.sumShow);if(!x)return '';
+ const p=h.filter(y=>y.w===x.w&&y.t<x.t).sort((a,b)=>b.t-a.t)[0];
+ const v=sVol(x),pv=p?sVol(p):0;
+ const cmp=pv>0&&v>0?' ('+sgn(Math.round((v-pv)/pv*100))+'% rispetto all\'ultima volta)':'';
+ const lines=x.ex.map(e=>{const pe=p&&p.ex.find(y=>y.id===e.id),d=delta(e,pe);
+  return '<div class="sl"><span class="dl '+d.c+'">'+d.t+'</span><b>'+e.nm+'</b><div class="meta">'+stext(e.sets)+'</div></div>'}).join('');
+ return '<section class="ex ok"><h2>Riepilogo: Scheda '+x.w+'</h2><p class="meta">'+fd(x.d)+' · '+sSets(x)+' serie'+(v>0?' · volume '+kgf(v):'')+cmp+'</p>'+lines+'<div class="mini"><button data-a="closesum">Chiudi riepilogo</button></div></section>';
+}
+function period(m,o){
+ const n=new Date();let a,b;
+ if(m==='w'){a=new Date(n.getFullYear(),n.getMonth(),n.getDate()-((n.getDay()+6)%7)+o*7);b=new Date(a.getFullYear(),a.getMonth(),a.getDate()+6)}
+ else{a=new Date(n.getFullYear(),n.getMonth()+o,1);b=new Date(n.getFullYear(),n.getMonth()+o+1,0)}
+ return {a:ds(a),b:ds(b),A:a,B:b};
+}
+function pstats(ses){
+ let sets=0,vol=0;const ex={};
+ ses.forEach(x=>x.ex.forEach(e=>{
+  const q=ex[e.id]||(ex[e.id]={nm:e.nm,sets:0,reps:0,max:0});
+  e.sets.forEach(y=>{const k=num(y.kg),r=num(y.r);sets++;q.sets++;q.reps+=r;vol+=k*r;if(k>q.max)q.max=k})}));
+ return {n:ses.length,sets,vol,ex};
+}
+function renderH(){
+ const h=[...hist()].sort((a,b)=>b.t-a.t);
+ $('prog').textContent=h.length?h.length+(h.length===1?' allenamento registrato':' allenamenti registrati'):'';
+ $('app').innerHTML=h.length?h.map(x=>{const v=sVol(x);
+  return '<section class="ex"><h2>Scheda '+x.w+' · '+fd(x.d)+'</h2><p class="meta">'+sSets(x)+' serie'+(v>0?' · volume '+kgf(v):'')+'</p>'
+   +x.ex.map(e=>'<div class="sl"><b>'+e.nm+'</b><div class="meta">'+stext(e.sets)+'</div></div>').join('')
+   +'<div class="mini"><button data-a="rm" data-h="'+x.t+'">'+(S.arm===String(x.t)?'Tocca di nuovo per eliminare':'Elimina')+'</button></div></section>'}).join('')
+  :'<p class="meta">Ancora nessun allenamento registrato. Quando premi "Fine allenamento" compare qui.</p>';
+}
+function renderR(){
+ const R=S.R||(S.R={m:'w',o:0}),p=period(R.m,R.o),q=period(R.m,R.o-1);
+ const all=hist(),ses=all.filter(x=>x.d>=p.a&&x.d<=p.b).sort((a,b)=>a.t-b.t);
+ const cur=pstats(ses),prv=pstats(all.filter(x=>x.d>=q.a&&x.d<=q.b));
+ const label=R.m==='w'?p.A.toLocaleDateString('it-IT',{day:'numeric',month:'short'})+' – '+p.B.toLocaleDateString('it-IT',{day:'numeric',month:'short',year:'numeric'}):p.A.toLocaleDateString('it-IT',{month:'long',year:'numeric'});
+ const ref=R.m==='w'?'settimana prima':'mese prima';
+ const dn=prv.n?' ('+sgn(cur.n-prv.n)+' vs '+ref+')':'';
+ const ds2=prv.sets?' ('+sgn(cur.sets-prv.sets)+' vs '+ref+')':'';
+ const dv=prv.vol>0&&cur.vol>0?' ('+sgn(Math.round((cur.vol-prv.vol)/prv.vol*100))+'% vs '+ref+')':'';
+ const ord=[...P.A,...P.B].map(y=>y[0]);Object.keys(cur.ex).forEach(id=>{if(!ord.includes(id))ord.push(id)});
+ const rows=ord.filter(id=>cur.ex[id]).map(id=>{
+  const c=cur.ex[id],pe=prv.ex[id];let d='—';
+  if(pe){if(c.max>0||pe.max>0){const z=c.max-pe.max;d=z?sgn(z)+' kg':'='}else{const z=c.reps-pe.reps;d=z?sgn(z)+' rip.':'='}}
+  return '<tr><td>'+c.nm+'</td><td>'+(c.max>0?fn(c.max)+' kg':'corpo libero')+'</td><td>'+d+'</td><td>'+c.sets+'</td><td>'+fn(c.reps)+'</td></tr>'}).join('');
+ $('prog').textContent='';
+ $('app').innerHTML='<div class="noprint"><div class="seg"><button data-a="pm" data-v="w" class="'+(R.m==='w'?'on':'')+'">Settimana</button><button data-a="pm" data-v="m" class="'+(R.m==='m'?'on':'')+'">Mese</button></div>'
+  +'<div class="nav"><button data-a="po" data-v="-1" aria-label="Periodo precedente">‹</button><span>'+label+'</span><button data-a="po" data-v="1" aria-label="Periodo successivo"'+(R.o>=0?' disabled':'')+'>›</button></div></div>'
+  +'<section class="ex"><h2>Report '+(R.m==='w'?'settimanale':'mensile')+'</h2><p class="meta">'+label+' · Scheda allenamento a casa</p>'
+  +(cur.n?'<div class="kp"><div><b>'+cur.n+'</b><span>sedute'+dn+'</span></div><div><b>'+cur.sets+'</b><span>serie'+ds2+'</span></div><div><b>'+kgf(cur.vol)+'</b><span>volume totale'+dv+'</span></div></div>'
+   +'<p class="meta">Sedute: '+ses.map(x=>fds(x.d)+' (Scheda '+x.w+')').join(', ')+'</p>'
+   +'<table class="rt"><thead><tr><th>Esercizio</th><th>Peso max</th><th>Variaz.</th><th>Serie</th><th>Rip.</th></tr></thead><tbody>'+rows+'</tbody></table>'
+   +'<p class="meta">Variazione: peso massimo rispetto al periodo precedente (per gli esercizi a corpo libero, ripetizioni totali). Volume = peso × ripetizioni di tutte le serie.</p>'
+   :'<p class="meta">Nessun allenamento registrato in questo periodo.</p>')
+  +'</section><button class="fin noprint" data-a="print">Stampa o salva in PDF</button><p class="meta noprint" id="pe"></p>';
+}
+function render(){
+ document.body.classList.toggle('nw',S.tab==='H'||S.tab==='R');
+ if(S.tab==='H')renderH();else if(S.tab==='R')renderR();else renderW();
+ if(!okS)$('app').insertAdjacentHTML('afterbegin','<p class="meta"><b>Attenzione:</b> aperta in questo modo, la scheda non salva i dati sul telefono. Aprila dal link per ricordare i pesi.</p>');
+ document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===S.tab));
+}
+const OP={};document.addEventListener('toggle',e=>{const d=e.target;if(d&&d.dataset&&d.dataset.d)OP[d.dataset.d]=d.open},true);
+let okS=true;try{localStorage.setItem('_t','1');localStorage.removeItem('_t')}catch(e){okS=false}
+function renderW(){
+ let done=0;
+ const html=P[S.tab].map(([id,nm,ns,rep,tip])=>{
+  const s=sets(id,ns),all=s.every(x=>x.d);if(all)done++;
+  const l=(S.last[id]||[]),lt=l.filter(x=>x.kg).map(x=>x.kg+' kg × '+(x.r||'?')).join(', ');
+  const rows=s.map((x,i)=>`<div class="row"><span>${i+1}</span>
+  <input type="text" inputmode="decimal" placeholder="${(l[i]&&l[i].kg)||'kg'}" value="${x.kg}" data-e="${id}" data-i="${i}" data-f="kg" aria-label="Peso serie ${i+1}">
+  <input type="text" inputmode="numeric" placeholder="${rep}" value="${x.r}" data-e="${id}" data-i="${i}" data-f="r" aria-label="Ripetizioni serie ${i+1}">
+  <button class="chk ${x.d?'d':''}" data-a="chk" data-e="${id}" data-i="${i}" aria-label="Serie ${i+1} fatta">${x.d?'✓':''}</button></div>`).join('');
+  return `<section class="ex ${all?'ok':''}"><h2>${nm}</h2>
+  <p class="meta">${ns} serie × ${rep==="max"?"max ripetizioni":rep+" ripetizioni"} · circa ${T[id]} min</p>
+  <p class="meta"><b>Peso di partenza:</b> ${W[id]}</p>
+  ${lt?`<p class="last">Ultima volta: ${lt}</p>`:''}
+  <details data-d="${id}"${OP[id]?' open':''}><summary>Come si esegue</summary><p class="meta">${tip}</p><a href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(nm+' esecuzione esercizio')}" target="_blank" rel="noopener">Cerca le immagini</a></details>
+  <div class="row h"><span></span><span>Peso (kg)</span><span>Ripetizioni</span><span>Fatta</span></div>${rows}
+  <div class="mini"><button data-a="add" data-e="${id}">+ serie</button>${s.length>1?`<button data-a="del" data-e="${id}">− serie</button>`:''}</div></section>`}).join('');
+ $('app').innerHTML=sumHtml()+'<p class="meta">2 serie per esercizio: la 1ª a 2 ripetizioni dal cedimento, la 2ª a 0-1. Panca con bilanciere da solo: tieni sempre 2-3 ripetizioni di scorta.</p>'+html;
+ const tot=P[S.tab].reduce((a,x)=>a+T[x[0]],5);$('prog').textContent=`Scheda ${S.tab}: ${done} di ${P[S.tab].length} esercizi fatti · circa ${tot} min, riscaldamento incluso`;
+}
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.f){sets(t.dataset.e)[t.dataset.i][t.dataset.f]=t.value;save()}});
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,id=b.dataset.e;
+ if(a!=='rm')S.arm=null;
+ if(a==='tab'){S.tab=b.dataset.t;$('msg').textContent=''}
+ else if(a==='chk'){const x=sets(id)[b.dataset.i];x.d=x.d?0:1;if(x.d&&S.auto)startTm(S.rest)}
+ else if(a==='add'){const s=sets(id),p=s[s.length-1];s.push({kg:p?p.kg:'',r:'',d:0})}
+ else if(a==='del'){sets(id).pop()}
+ else if(a==='fin'){
+  const ex=[];
+  P[S.tab].forEach(([i,nm])=>{const d=(S.cur[i]||[]).filter(x=>x.d||x.kg||x.r).map(x=>({kg:x.kg,r:x.r}));if(d.length){S.last[i]=d;ex.push({id:i,nm,sets:d})}delete S.cur[i]});
+  if(!ex.length){$('msg').textContent='Non hai inserito nessun dato: non c\'è niente da salvare.'}
+  else{const t=Date.now();hist().push({t,d:ds(new Date()),w:S.tab,ex});S.sumShow=t;S.tab=S.tab==='A'?'B':'A';$('msg').textContent='Allenamento salvato.';scrollTo(0,0)}}
+ else if(a==='closesum'){delete S.sumShow}
+ else if(a==='rm'){if(S.arm===b.dataset.h){S.hist=hist().filter(x=>String(x.t)!==S.arm);if(String(S.sumShow)===S.arm)delete S.sumShow;S.arm=null}else S.arm=b.dataset.h}
+ else if(a==='pm'){S.R={m:b.dataset.v,o:0}}
+ else if(a==='po'){const R=S.R||(S.R={m:'w',o:0});R.o=Math.min(0,R.o+(+b.dataset.v))}
+ else if(a==='print'){try{window.print()}catch(err){$('pe').textContent='Non riesco ad aprire la stampa da qui: usa il menu del browser (Condividi, poi Stampa).'}return}
+ save();render();
+});
+render();tmUi();
+</script></body></html>
