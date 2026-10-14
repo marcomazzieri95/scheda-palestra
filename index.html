@@ -80,7 +80,7 @@ body{background:#fff}
 <div class="prog" id="prog"></div>
 <main><div id="app"></div><button class="fin" id="fb" data-a="fin">Fine allenamento</button><div id="msg"></div></main>
 <div id="tm" role="group" aria-label="Timer di recupero"><div class="in">
-<div class="tt"><div id="td">1:30</div><button class="tb" id="tg" data-m="go">Avvia</button><button class="tb s" data-m="rs">Azzera</button></div>
+<div class="tt"><div id="td">1:30</div><button class="tb" id="tg" data-m="go">Avvia</button><button class="tb s" data-m="rs">Azzera</button><button class="tb s" data-m="test" aria-label="Prova il suono">🔔</button></div>
 <div class="pr"><button data-m="pre" data-s="60">1:00</button><button data-m="pre" data-s="90">1:30</button><button data-m="pre" data-s="120">2:00</button><button data-m="pre" data-s="180">3:00</button><label title="Il timer parte quando spunti una serie"><input type="checkbox" id="au">Auto-avvio</label></div>
 </div></div>
 <script>
@@ -118,12 +118,12 @@ function tmUi(fin){
  $('au').checked=!!S.auto;
 }
 function audio(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume()}catch(e){}}
-function beep(){try{audio();[0,.25,.5].forEach(t=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.value=.2;o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+.15)})}catch(e){}}
+function beep(){try{audio();const n=ac.currentTime;for(let i=0;i<6;i++){const t=n+i*.32,o=ac.createOscillator(),g=ac.createGain();o.type='square';o.frequency.value=i%2?1100:1500;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.9,t+.01);g.gain.setValueAtTime(.9,t+.2);g.gain.exponentialRampToValueAtTime(.0001,t+.24);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.26)}}catch(e){}}
 function keepOn(){try{if(navigator.wakeLock)navigator.wakeLock.request('screen').then(l=>{wl=l}).catch(()=>{})}catch(e){}}
 function release(){try{if(wl){wl.release();wl=null}}catch(e){}}
 function tick(){
  const l=Math.ceil((TM.end-Date.now())/1000);
- if(l<=0){clearInterval(ti);TM.run=false;TM.left=S.rest;release();beep();try{navigator.vibrate&&navigator.vibrate([200,100,200,100,200])}catch(e){}tmUi(true)}
+ if(l<=0){clearInterval(ti);TM.run=false;TM.left=S.rest;release();beep();try{navigator.vibrate&&navigator.vibrate([300,120,300,120,300,120,300])}catch(e){}tmUi(true)}
  else if(l!==TM.left){TM.left=l;tmUi()}
 }
 function startTm(sec){audio();TM.left=sec;TM.end=Date.now()+sec*1000;TM.run=true;clearInterval(ti);ti=setInterval(tick,250);keepOn();tmUi()}
@@ -133,6 +133,7 @@ document.addEventListener('click',e=>{
  const b=e.target.closest('[data-m]');if(!b)return;const m=b.dataset.m;
  if(m==='go'){TM.run?pauseTm():startTm(TM.left>0?TM.left:S.rest)}
  else if(m==='rs'){resetTm()}
+ else if(m==='test'){audio();beep();try{navigator.vibrate&&navigator.vibrate(250)}catch(e){}}
  else if(m==='pre'){S.rest=+b.dataset.s;save();startTm(S.rest)}
 });
 $('au').addEventListener('change',e=>{S.auto=e.target.checked?1:0;save()});
