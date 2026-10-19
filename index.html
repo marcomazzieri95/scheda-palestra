@@ -96,12 +96,12 @@ B:[
 ["ht","Hip thrust con bilanciere",2,"8-12","Spalle sulla panca, spingi coi talloni e contrai i glutei in alto."],
 ["pim","Panca inclinata con manubri",2,"6-10","Schienale a circa 30°, scendi fino a sentire lo stiramento del petto."],
 ["rk","Rematore a un braccio con kettlebell 16 kg",2,"8-12","Una mano e un ginocchio sulla panca, tira il gomito verso il fianco."],
-["dp","Dip alle parallele",2,"6-10","Busto leggermente in avanti, scendi controllato. Col giubbotto quando diventa facile."],
+["sp","Shoulder press con manubri da seduto",2,"8-12","Schienale della panca quasi verticale. Scendi fino ai manubri all'altezza delle orecchie e spingi in alto senza inarcare la schiena."],
 ["nc","Nordic curl assistito alla spalliera",2,"4-8","Piedi bloccati sotto un piolo, ginocchia su un cuscino. Scendi in avanti il più lentamente possibile con il corpo dritto, poi spingiti su con le mani."],
 ["ap","Alzate posteriori a busto flesso",2,"12-15","Busto inclinato, apri le braccia portando i gomiti indietro."],
 ["cf","Calf raise su gradino, una gamba alla volta",2,"12-15","Kettlebell in mano, sali sulla punta al massimo e scendi fino a sentire lo stiramento."]]};
-const T={pbb:7,tr:6,lc:5,alm:4,cbp:4,fr:4,sg:4,ht:7,pim:7,rk:7,dp:6,nc:5,ap:4,cf:4};
-const W={pbb:"25-35 kg totali (bilanciere incluso), con manubri 10-12 kg l'uno",tr:"peso corporeo",lc:"7-12 kg sull'attacco",alm:"4-6 kg per mano",cbp:"6-8 kg",fr:"8-12 kg, con due mani",sg:"peso corporeo",ht:"35-55 kg totali",pim:"8-12 kg per mano",rk:"kettlebell da 8 kg, poi 16 kg quando diventa facile",dp:"peso corporeo, poi col giubbotto",nc:"peso corporeo, aiutandoti con le mani per risalire",ap:"3-5 kg per mano",cf:"peso corporeo, poi kettlebell in mano"};
+const T={pbb:7,tr:6,lc:5,alm:4,cbp:4,fr:4,sg:4,ht:7,pim:7,rk:7,sp:6,nc:5,ap:4,cf:4};
+const W={pbb:"25-35 kg totali (bilanciere incluso), con manubri 10-12 kg l'uno",tr:"peso corporeo",lc:"7-12 kg sull'attacco",alm:"4-6 kg per mano",cbp:"6-8 kg",fr:"8-12 kg, con due mani",sg:"peso corporeo",ht:"35-55 kg totali",pim:"8-12 kg per mano",rk:"kettlebell da 8 kg, poi 16 kg quando diventa facile",sp:"8-10 kg per mano",nc:"peso corporeo, aiutandoti con le mani per risalire",ap:"3-5 kg per mano",cf:"peso corporeo, poi kettlebell in mano"};
 let S=null;try{S=JSON.parse(localStorage.getItem('sg'))}catch(e){}
 S=S||{tab:'A',cur:{},last:{}};
 if(!S.rest)S.rest=90;if(S.auto===undefined)S.auto=1;if(!S.hist)S.hist=[];if(!S.R)S.R={m:'w',o:0};
