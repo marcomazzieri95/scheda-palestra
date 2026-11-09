@@ -93,15 +93,16 @@ const P={A:[
 ["fr","French press con manubrio sulla panca",2,"8-12","Gomiti fermi e puntati in alto, muovi solo l'avambraccio."],
 ["sg","Sollevamento gambe alla spalliera",2,"10-15","Bacino leggermente arrotondato, sali senza dondolare."]],
 B:[
-["ht","Hip thrust con bilanciere",2,"8-12","Spalle sulla panca, spingi coi talloni e contrai i glutei in alto."],
-["pim","Panca inclinata con manubri",2,"6-10","Schienale a circa 30°, scendi fino a sentire lo stiramento del petto."],
-["rk","Rematore a un braccio con kettlebell 16 kg",2,"8-12","Una mano e un ginocchio sulla panca, tira il gomito verso il fianco."],
-["sp","Shoulder press con manubri da seduto",2,"8-12","Schienale della panca quasi verticale. Scendi fino ai manubri all'altezza delle orecchie e spingi in alto senza inarcare la schiena."],
-["nc","Nordic curl assistito alla spalliera",2,"4-8","Piedi bloccati sotto un piolo, ginocchia su un cuscino. Scendi in avanti il più lentamente possibile con il corpo dritto, poi spingiti su con le mani."],
-["ap","Alzate posteriori a busto flesso",2,"12-15","Busto inclinato, apri le braccia portando i gomiti indietro."],
-["cf","Calf raise su gradino, una gamba alla volta",2,"12-15","Kettlebell in mano, sali sulla punta al massimo e scendi fino a sentire lo stiramento."]]};
-const T={pbb:7,tr:6,lc:5,alm:4,cbp:4,fr:4,sg:4,ht:7,pim:7,rk:7,sp:6,nc:5,ap:4,cf:4};
-const W={pbb:"25-35 kg totali (bilanciere incluso), con manubri 10-12 kg l'uno",tr:"peso corporeo",lc:"7-12 kg sull'attacco",alm:"4-6 kg per mano",cbp:"6-8 kg",fr:"8-12 kg, con due mani",sg:"peso corporeo",ht:"35-55 kg totali",pim:"8-12 kg per mano",rk:"kettlebell da 8 kg, poi 16 kg quando diventa facile",sp:"8-10 kg per mano",nc:"peso corporeo, aiutandoti con le mani per risalire",ap:"3-5 kg per mano",cf:"peso corporeo, poi kettlebell in mano"};
+["le","Leg extension con l'attacco gambe della panca",2,"12-15","Seduto sulla panca con le caviglie sotto il rullo dell'attacco. Estendi le gambe fino in alto, fai una pausa di un secondo e scendi lentamente in 3 secondi.","panca piana con attacco gambe"],
+["lc","Leg curl sdraiato con l'attacco gambe della panca",2,"10-12","Pancia in giù, bacino fermo sulla panca: porta i talloni verso i glutei e torna su lentamente in 3 secondi.","panca piana con attacco gambe"],
+["pim","Panca inclinata con manubri",2,"8-12","Schienale a circa 30-45°, scendi fino a sentire lo stiramento del petto.","panca inclinata a 30-45°"],
+["rp","Rematore con il petto appoggiato alla panca inclinata",2,"10-12","A pancia in giù sulla panca inclinata, un manubrio per mano con le braccia tese. Porta i gomiti indietro avvicinando le scapole, poi scendi controllato.","panca inclinata a 30-45°"],
+["ap","Alzate posteriori a pancia in giù sulla panca inclinata",2,"12-15","Petto appoggiato allo schienale, gomiti leggermente flessi: apri le braccia ai lati fino all'altezza delle spalle.","panca inclinata a 30-45°"],
+["sp","Shoulder press con manubri da seduto",2,"8-12","Schienale della panca verticale. Scendi fino ai manubri all'altezza delle orecchie e spingi in alto senza inarcare la schiena.","schienale verticale"],
+["gb","Glute bridge a terra con un manubrio sulle anche",2,"10-15","Schiena a terra, ginocchia piegate e piedi appoggiati. Tieni il manubrio sulle anche e spingi il bacino in alto, contrai i glutei un secondo e scendi piano. Quando diventa facile passa alla versione a una gamba.","a terra"],
+["cf","Calf raise su gradino, una gamba alla volta",2,"12-15","Kettlebell in mano, sali sulla punta al massimo e scendi fino a sentire lo stiramento.","a terra"]]};
+const T={pbb:7,tr:6,lc:5,alm:4,cbp:4,fr:4,sg:4,pim:7,sp:6,ap:4,cf:4,le:4,rp:5,gb:5};
+const W={pbb:"25-35 kg totali (bilanciere incluso), con manubri 10-12 kg l'uno",tr:"peso corporeo",lc:"7-12 kg sull'attacco",alm:"4-6 kg per mano",cbp:"6-8 kg",fr:"8-12 kg, con due mani",sg:"peso corporeo",pim:"8-12 kg per mano",sp:"8-10 kg per mano",ap:"3-5 kg per mano",le:"10-15 kg sull'attacco",rp:"6-10 kg per mano",gb:"10-20 kg su un solo manubrio",cf:"peso corporeo, poi kettlebell in mano"};
 let S=null;try{S=JSON.parse(localStorage.getItem('sg'))}catch(e){}
 S=S||{tab:'A',cur:{},last:{}};
 if(!S.rest)S.rest=90;if(S.auto===undefined)S.auto=1;if(!S.hist)S.hist=[];if(!S.R)S.R={m:'w',o:0};
@@ -176,7 +177,7 @@ function period(m,o){
 function pstats(ses){
  let sets=0,vol=0;const ex={};
  ses.forEach(x=>x.ex.forEach(e=>{
-  const q=ex[e.id]||(ex[e.id]={nm:e.nm,sets:0,reps:0,max:0});
+  const q=ex[e.id]||(ex[e.id]={nm:e.nm,sets:0,reps:0,max:0});q.nm=e.nm;
   e.sets.forEach(y=>{const k=num(y.kg),r=num(y.r);sets++;q.sets++;q.reps+=r;vol+=k*r;if(k>q.max)q.max=k})}));
  return {n:ses.length,sets,vol,ex};
 }
@@ -198,7 +199,7 @@ function renderR(){
  const dn=prv.n?' ('+sgn(cur.n-prv.n)+' vs '+ref+')':'';
  const ds2=prv.sets?' ('+sgn(cur.sets-prv.sets)+' vs '+ref+')':'';
  const dv=prv.vol>0&&cur.vol>0?' ('+sgn(Math.round((cur.vol-prv.vol)/prv.vol*100))+'% vs '+ref+')':'';
- const ord=[...P.A,...P.B].map(y=>y[0]);Object.keys(cur.ex).forEach(id=>{if(!ord.includes(id))ord.push(id)});
+ const ord=[...new Set([...P.A,...P.B].map(y=>y[0]))];Object.keys(cur.ex).forEach(id=>{if(!ord.includes(id))ord.push(id)});
  const rows=ord.filter(id=>cur.ex[id]).map(id=>{
   const c=cur.ex[id],pe=prv.ex[id];let d='—';
   if(pe){if(c.max>0||pe.max>0){const z=c.max-pe.max;d=z?sgn(z)+' kg':'='}else{const z=c.reps-pe.reps;d=z?sgn(z)+' rip.':'='}}
@@ -224,7 +225,7 @@ const OP={};document.addEventListener('toggle',e=>{const d=e.target;if(d&&d.data
 let okS=true;try{localStorage.setItem('_t','1');localStorage.removeItem('_t')}catch(e){okS=false}
 function renderW(){
  let done=0;
- const html=P[S.tab].map(([id,nm,ns,rep,tip])=>{
+ const html=P[S.tab].map(([id,nm,ns,rep,tip,pos])=>{
   const s=sets(id,ns),all=s.every(x=>x.d);if(all)done++;
   const l=(S.last[id]||[]),lt=l.filter(x=>x.kg).map(x=>x.kg+' kg × '+(x.r||'?')).join(', ');
   const rows=s.map((x,i)=>`<div class="row"><span>${i+1}</span>
@@ -233,7 +234,7 @@ function renderW(){
   <button class="chk ${x.d?'d':''}" data-a="chk" data-e="${id}" data-i="${i}" aria-label="Serie ${i+1} fatta">${x.d?'✓':''}</button></div>`).join('');
   return `<section class="ex ${all?'ok':''}"><h2>${nm}</h2>
   <p class="meta">${ns} serie × ${rep==="max"?"max ripetizioni":rep+" ripetizioni"} · circa ${T[id]} min</p>
-  <p class="meta"><b>Peso di partenza:</b> ${W[id]}</p>
+  ${pos?`<p class="meta"><b>Posizione:</b> ${pos}</p>`:''}<p class="meta"><b>Peso di partenza:</b> ${W[id]}</p>
   ${lt?`<p class="last">Ultima volta: ${lt}</p>`:''}
   <details data-d="${id}"${OP[id]?' open':''}><summary>Come si esegue</summary><p class="meta">${tip}</p><a href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(nm+' esecuzione esercizio')}" target="_blank" rel="noopener">Cerca le immagini</a></details>
   <div class="row h"><span></span><span>Peso (kg)</span><span>Ripetizioni</span><span>Fatta</span></div>${rows}
