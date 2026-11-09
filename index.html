@@ -92,7 +92,7 @@ body{background:#fff}
 <script>
 const P={A:[
 ["pbb","Panca piana con bilanciere (o manubri)",2,"6-10","Bilanciere sui supporti, scapole ferme. Da solo resta a 2-3 ripetizioni dal cedimento."],
-["tr","Trazioni alla sbarra",2,"max","Parti da braccia tese, porta il mento sopra la sbarra. Se non riesci, fai solo la discesa in 5 secondi."],
+["ar","Australian pull-up agli anelli",2,"8-12","Anelli appesi alla sbarra, all'altezza dei fianchi. Sdraiato sotto di loro con il corpo dritto e i talloni a terra, tira il petto verso gli anelli portando i gomiti indietro e avvicinando le scapole, poi scendi controllato. Più il corpo è orizzontale, più è difficile."],
 ["lc","Leg curl sdraiato con l'attacco gambe della panca",2,"8-12","Pancia in giù, bacino fermo sulla panca: porta i talloni verso i glutei e torna su lentamente in 3 secondi."],
 ["alm","Alzate laterali con manubri",2,"12-15","Gomiti leggermente flessi, sali fino all'altezza delle spalle."],
 ["cbp","Curl bicipiti sulla panca con appoggio",2,"8-12","Braccio appoggiato al cuscino, scendi lentamente senza slancio."],
@@ -107,8 +107,8 @@ B:[
 ["sp","Shoulder press con manubri da seduto",2,"8-12","Schienale della panca verticale. Scendi fino ai manubri all'altezza delle orecchie e spingi in alto senza inarcare la schiena.","schienale verticale"],
 ["gb","Glute bridge a terra con un manubrio sulle anche",2,"10-15","Schiena a terra, ginocchia piegate e piedi appoggiati. Tieni il manubrio sulle anche e spingi il bacino in alto, contrai i glutei un secondo e scendi piano. Quando diventa facile passa alla versione a una gamba.","a terra"],
 ["cf","Calf raise su gradino, una gamba alla volta",2,"12-15","Kettlebell in mano, sali sulla punta al massimo e scendi fino a sentire lo stiramento.","a terra"]]};
-const T={pbb:7,tr:6,lc:5,alm:4,cbp:4,fr:4,sg:4,pim:7,sp:6,ap:4,cf:4,le:4,rp:5,gb:5};
-const W={pbb:"25-35 kg totali (bilanciere incluso), con manubri 10-12 kg l'uno",tr:"peso corporeo",lc:"7-12 kg sull'attacco",alm:"4-6 kg per mano",cbp:"6-8 kg",fr:"8-12 kg, con due mani",sg:"peso corporeo",pim:"8-12 kg per mano",sp:"8-10 kg per mano",ap:"3-5 kg per mano",le:"10-15 kg sull'attacco",rp:"6-10 kg per mano",gb:"10-20 kg su un solo manubrio",cf:"peso corporeo, poi kettlebell in mano"};
+const T={pbb:7,ar:6,lc:5,alm:4,cbp:4,fr:4,sg:4,pim:7,sp:6,ap:4,cf:4,le:4,rp:5,gb:5};
+const W={pbb:"25-35 kg totali (bilanciere incluso), con manubri 10-12 kg l'uno",ar:"peso corporeo (la difficoltà dipende da quanto inclini il corpo)",lc:"7-12 kg sull'attacco",alm:"4-6 kg per mano",cbp:"6-8 kg",fr:"8-12 kg, con due mani",sg:"peso corporeo",pim:"8-12 kg per mano",sp:"8-10 kg per mano",ap:"3-5 kg per mano",le:"10-15 kg sull'attacco",rp:"6-10 kg per mano",gb:"10-20 kg su un solo manubrio",cf:"peso corporeo, poi kettlebell in mano"};
 let S=null;try{S=JSON.parse(localStorage.getItem('sg'))}catch(e){}
 S=S||{tab:'A',cur:{},last:{}};
 if(!S.rest)S.rest=90;if(S.auto===undefined)S.auto=1;if(!S.hist)S.hist=[];if(!S.R)S.R={m:'w',o:0};
@@ -230,7 +230,7 @@ function render(){
 const OP={};document.addEventListener('toggle',e=>{const d=e.target;if(d&&d.dataset&&d.dataset.d)OP[d.dataset.d]=d.open},true);
 let okS=true;try{localStorage.setItem('_t','1');localStorage.removeItem('_t')}catch(e){okS=false}
 const ZN={pet:'Petto',spa:'Spalle',bic:'Bicipiti',add:'Addominali',qua:'Quadricipiti',tra:'Trapezio',dor:'Dorsali',tri:'Tricipiti',glu:'Glutei',fem:'Femorali',pol:'Polpacci'};
-const MS={pbb:{p:['pet'],s:['tri','spa']},tr:{p:['dor'],s:['bic','tra']},lc:{p:['fem'],s:['pol']},alm:{p:['spa'],s:['tra']},cbp:{p:['bic'],s:[]},fr:{p:['tri'],s:[]},sg:{p:['add'],s:[]},le:{p:['qua'],s:[]},pim:{p:['pet'],s:['spa','tri']},rp:{p:['dor','tra'],s:['bic','spa']},ap:{p:['spa'],s:['tra']},sp:{p:['spa'],s:['tri']},gb:{p:['glu'],s:['fem']},cf:{p:['pol'],s:[]}};
+const MS={pbb:{p:['pet'],s:['tri','spa']},ar:{p:['dor','tra'],s:['bic','spa']},lc:{p:['fem'],s:['pol']},alm:{p:['spa'],s:['tra']},cbp:{p:['bic'],s:[]},fr:{p:['tri'],s:[]},sg:{p:['add'],s:[]},le:{p:['qua'],s:[]},pim:{p:['pet'],s:['spa','tri']},rp:{p:['dor','tra'],s:['bic','spa']},ap:{p:['spa'],s:['tra']},sp:{p:['spa'],s:['tri']},gb:{p:['glu'],s:['fem']},cf:{p:['pol'],s:[]}};
 const SPA='<circle class="@" cx="11" cy="25" r="5.5"/><circle class="@" cx="49" cy="25" r="5.5"/>';
 const ARM='<line class="@" x1="8.5" y1="32" x2="8" y2="46" stroke-width="6"/><line class="@" x1="51.5" y1="32" x2="52" y2="46" stroke-width="6"/>';
 const Z={
